@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Powernet Lab</string>
+    <string name="app_name">powernet</string>
     <string name="power_wall">Power Wall</string>
     <string name="refrigerator">Refrigerator</string>
     <string name="dish_washer">Dish Washer</string>
@@ -17,6 +17,5 @@
     <string name="power_systems">Power Systems</string>
     <string name="laundry">Laundry</string>
     <string name="kitchen">Kitchen</string>
-    <string name="powernet">Powernet</string>
 
 </resources>
