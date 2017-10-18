@@ -23,6 +23,7 @@ import edu.stanford.slac.powernetlab.Fragments.AcFragment;
 import edu.stanford.slac.powernetlab.Fragments.DishWasherFragment;
 import edu.stanford.slac.powernetlab.Fragments.DryerFragment;
 import edu.stanford.slac.powernetlab.Fragments.LightsFragment;
+import edu.stanford.slac.powernetlab.Fragments.MicrowaveFragment;
 import edu.stanford.slac.powernetlab.Fragments.OvenFragment;
 import edu.stanford.slac.powernetlab.Fragments.PowerWallFragment;
 import edu.stanford.slac.powernetlab.Fragments.RefrigeratorFragment;
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_fragment_twelve:
                 fragmentClass = AboutFragment.class;
+                break;
+            case R.id.nav_microwave:
+                fragmentClass = MicrowaveFragment.class;
                 break;
         }
         try{

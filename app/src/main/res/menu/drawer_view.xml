@@ -25,6 +25,11 @@
                         android:icon="@android:drawable/ic_input_get"
                         android:title="@string/stove"
                         />
+                    <item
+                        android:id="@+id/nav_microwave"
+                        android:icon="@android:drawable/ic_input_get"
+                        android:title="@string/microwave"
+                        />
                 </group>
             </menu>
         </item>
