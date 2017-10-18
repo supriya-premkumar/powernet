@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Powernet Lab</string>
+    <string name="power_wall">Power Wall</string>
+    <string name="refrigerator">Refrigerator</string>
+    <string name="dish_washer">Dish Washer</string>
+    <string name="dryer">Dryer</string>
+    <string name="washer">washer</string>
+    <string name="ac">A/C</string>
+    <string name="oven">Oven</string>
+    <string name="stove">Stove</string>
+    <string name="water_heater">Water Heater</string>
+    <string name="solar_panels">Solar Panels</string>
+    <string name="lights">Lights</string>
+    <string name="about">About</string>
+    <string name="drawer_open">Open Navigation Drawer</string>
+    <string name="drawer_close">Close Navigation Drawer</string>
+    <string name="power_systems">Power Systems</string>
+    <string name="laundry">Laundry</string>
+    <string name="kitchen">Kitchen</string>
+    <string name="powernet">Powernet</string>
+
+</resources>
