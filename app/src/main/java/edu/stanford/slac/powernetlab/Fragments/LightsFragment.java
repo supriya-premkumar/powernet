@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import edu.stanford.slac.powernetlab.R;
 
-public class LightsFragment extends Fragment {
+public class LightsFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

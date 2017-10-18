@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import edu.stanford.slac.powernetlab.R;
 
-public class WasherFragment extends Fragment {
+public class WasherFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

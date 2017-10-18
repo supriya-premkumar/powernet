@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import edu.stanford.slac.powernetlab.R;
 
-public class PowerWallFragment extends Fragment {
+public class PowerWallFragment extends android.support.v4.app.Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

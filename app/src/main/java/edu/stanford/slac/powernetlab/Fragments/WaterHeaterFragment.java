@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import edu.stanford.slac.powernetlab.R;
 
-public class WaterHeaterFragment extends Fragment{
+public class WaterHeaterFragment extends android.support.v4.app.Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

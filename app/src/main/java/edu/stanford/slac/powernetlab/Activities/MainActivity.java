@@ -1,7 +1,10 @@
 package edu.stanford.slac.powernetlab.Activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +18,18 @@ import android.widget.Toolbar;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import edu.stanford.slac.powernetlab.Fragments.AboutFragment;
+import edu.stanford.slac.powernetlab.Fragments.AcFragment;
+import edu.stanford.slac.powernetlab.Fragments.DishWasherFragment;
+import edu.stanford.slac.powernetlab.Fragments.DryerFragment;
+import edu.stanford.slac.powernetlab.Fragments.LightsFragment;
+import edu.stanford.slac.powernetlab.Fragments.OvenFragment;
+import edu.stanford.slac.powernetlab.Fragments.PowerWallFragment;
+import edu.stanford.slac.powernetlab.Fragments.RefrigeratorFragment;
+import edu.stanford.slac.powernetlab.Fragments.SolarPanelsFragment;
+import edu.stanford.slac.powernetlab.Fragments.StoveFragment;
+import edu.stanford.slac.powernetlab.Fragments.WasherFragment;
+import edu.stanford.slac.powernetlab.Fragments.WaterHeaterFragment;
 import edu.stanford.slac.powernetlab.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 //          Find Drawer view
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        nvDrawer = (NavigationView)findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
+
         mDrawerToggle =setupDrawerToggle();
 
         mDrawer.addDrawerListener(mDrawerToggle);
@@ -50,12 +68,87 @@ public class MainActivity extends AppCompatActivity {
 //        tintManager.setTintColor(Color.parseColor("#20000000"));
     }
 
+    private void setupDrawerContent(NavigationView navigationView){
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        selectDrawerItem(item);
+                        return true;
+                    }
+                }
+        );
+
+    }
+
 
     private ActionBarDrawerToggle setupDrawerToggle(){
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
 
+    }
+
+    public void selectDrawerItem(MenuItem item){
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        android.support.v4.app.Fragment fragment = null;
+        Class fragmentClass = null;
+        switch(item.getItemId()){
+            case R.id.nav_fragment_one:
+                fragmentClass = RefrigeratorFragment.class;
+                break;
+            case R.id.nav_fragment_three:
+                fragmentClass = DishWasherFragment.class;
+                break;
+            case R.id.nav_fragment_seven:
+                fragmentClass = OvenFragment.class;
+                break;
+            case R.id.nav_fragment_eight:
+                fragmentClass = StoveFragment.class;
+                break;
+            case R.id.nav_fragment_four:
+                fragmentClass = DryerFragment.class;
+                break;
+            case R.id.nav_fragment_five:
+                fragmentClass = WasherFragment.class;
+                break;
+            case R.id.nav_fragment_two:
+                fragmentClass = PowerWallFragment.class;
+                break;
+            case R.id.nav_fragment_six:
+                fragmentClass = AcFragment.class;
+                break;
+            case R.id.nav_fragment_nine:
+                fragmentClass = WaterHeaterFragment.class;
+                break;
+            case R.id.nav_fragment_ten:
+                fragmentClass = SolarPanelsFragment.class;
+                break;
+            case R.id.nav_fragment_eleven:
+                fragmentClass = LightsFragment.class;
+                break;
+            case R.id.nav_fragment_twelve:
+                fragmentClass = AboutFragment.class;
+                break;
+        }
+        try{
+            fragment = (android.support.v4.app.Fragment) fragmentClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+
+        //Highlight the seleceted item has been done by NavigationView
+        item.setChecked(true);
+        //Set Action Bar title
+        setTitle(item.getTitle());
+        //Close the navigation drawer
+        mDrawer.closeDrawers();
 
     }
 

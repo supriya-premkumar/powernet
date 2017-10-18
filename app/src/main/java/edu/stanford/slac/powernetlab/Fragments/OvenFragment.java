@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import edu.stanford.slac.powernetlab.R;
 
-public class OvenFragment extends Fragment {
+public class OvenFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
