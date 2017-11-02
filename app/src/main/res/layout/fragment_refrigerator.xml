@@ -1,35 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <!--<TextView-->
-    <!--android:id="@+id/device_name_key"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="15dp"-->
-    <!--android:text="Device Name"-->
-    <!--android:textColor="@color/primary_text"/>-->
+    <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
-    <!--<TextView-->
-    <!--android:id="@+id/device_name_value"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignBaseline="@+id/device_name_key"-->
-    <!--android:layout_alignBottom="@+id/device_name_key"-->
-    <!--android:layout_marginStart="70dp"-->
-    <!--android:text="R_F"-->
-    <!--android:layout_toEndOf="@+id/device_name_key"-->
-    <!--android:textColor="@color/primary_text" />-->
+        android:id="@+id/ls_refrigerator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/rv_refrigerator"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="15dp"-->
-        <!--android:scrollbars="vertical">-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:src="@drawable/refrigerator" />
 
-    <!--</android.support.v7.widget.RecyclerView>-->
-</RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="50dp"
+                android:text="Appliance Name:"
+                android:textColor="@color/secondary_text"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="50dp"
+                android:textColor="@color/primary_text"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+        <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:text="Appliance Status:"
+                android:textColor="@color/secondary_text"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/device_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary_dark"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/primary_text"
+                android:entries="@array/appliance_status"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:text="Power Consumption:"
+                android:textColor="@color/secondary_text"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/power_consumption"
+                android:layout_width="wrap_content"
+                android:text="0.0"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/primary_text"
+                android:entries="@array/appliance_status"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/watt"
+                android:layout_width="wrap_content"
+                android:text="w"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/primary_text"
+                android:entries="@array/appliance_status"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

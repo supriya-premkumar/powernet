@@ -26,6 +26,10 @@ dependencies {
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.android.support:design:26.1.0'
 
+    //Butterknife
+    compile 'com.jakewharton:butterknife:8.8.1'
+
+
 //    Retrofit dependencies
     compile 'com.google.code.gson:gson:2.8.0' // To serialize and Deserialize json data
     compile 'com.squareup.retrofit2:retrofit:2.1.0'

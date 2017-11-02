@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<model> call, Response<model> response) {
                 int code = response.code();
                 model model = response.body();
-                Log.d("HTTP CODE: ", String.valueOf(code));
-                Log.d("HTTP BODY: ", model.toString());
+//                Log.d("HTTP CODE: ", String.valueOf(code));
+//                Log.d("HTTP BODY: ", model.toString());
             }
 
             @Override

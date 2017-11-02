@@ -3,6 +3,22 @@ package edu.stanford.slac.powernetlab.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class model {
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     @SerializedName("id")
     public int id;
 

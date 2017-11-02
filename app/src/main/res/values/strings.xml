@@ -19,4 +19,9 @@
     <string name="kitchen">Kitchen</string>
     <string name="microwave">Microwave</string>
 
+    <string-array name="appliance_status">
+        <item> ON </item>
+        <item> OFF </item>
+    </string-array>
+
 </resources>

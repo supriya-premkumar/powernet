@@ -12,7 +12,11 @@
         <!--Translucent status Bar-->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
         <item name="colorControlNormal">@color/background</item>
+    </style>
 
+    <style name="spinner_dropdown_style_theme1" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:background">@color/divider</item>
+        <item name="android:backgroundTint">@color/primary_dark</item>
 
     </style>
 
