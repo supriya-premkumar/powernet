@@ -14,10 +14,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ToolbarWidgetWrapper;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toolbar;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import edu.stanford.slac.powernetlab.Fragments.AboutFragment;
@@ -33,7 +36,14 @@ import edu.stanford.slac.powernetlab.Fragments.SolarPanelsFragment;
 import edu.stanford.slac.powernetlab.Fragments.StoveFragment;
 import edu.stanford.slac.powernetlab.Fragments.WasherFragment;
 import edu.stanford.slac.powernetlab.Fragments.WaterHeaterFragment;
+import edu.stanford.slac.powernetlab.Model.model;
 import edu.stanford.slac.powernetlab.R;
+import edu.stanford.slac.powernetlab.Rest.ApiEndpointInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private android.support.v7.widget.Toolbar toolbar;
@@ -42,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private final static String TAG = MainActivity.class.getSimpleName();
+    public static final String BASE_URL = "http://pwrnet-158117.appspot.com/api/v1/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(mDrawerToggle);
 
+        connectApitoGetData();
+
 //        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rv_refrigerator);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,6 +87,37 @@ public class MainActivity extends AppCompatActivity {
 //        tintManager.setNavigationBarTintEnabled(true);
 ////         set the transparent color of the status bar, 20% darker
 //        tintManager.setTintColor(Color.parseColor("#20000000"));
+    }
+
+    private void connectApitoGetData() {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        ApiEndpointInterface endpointInterface = retrofit.create(ApiEndpointInterface.class);
+
+        Call<model> call = endpointInterface.getData("5/");
+        call.enqueue(new Callback<model>() {
+            @Override
+            public void onResponse(Call<model> call, Response<model> response) {
+                int code = response.code();
+                model model = response.body();
+                Log.d("HTTP CODE: ", String.valueOf(code));
+                Log.d("HTTP BODY: ", model.toString());
+            }
+
+            @Override
+            public void onFailure(Call<model> call, Throwable t) {
+
+            }
+        });
+        Log.d("API-Data", call.getClass().toString());
+
+
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
