@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,22 +41,26 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private final static String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 //        Retrieve the AppCompact Toolbar
-         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //          Find Drawer view
-        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-        nvDrawer = (NavigationView)findViewById(R.id.nvView);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
-        mDrawerToggle =setupDrawerToggle();
-
+        mDrawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(mDrawerToggle);
+
+//        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rv_refrigerator);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
 ////        set the padding to match the status bar height
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 //        tintManager.setTintColor(Color.parseColor("#20000000"));
     }
 
-    private void setupDrawerContent(NavigationView navigationView){
+    private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -83,18 +89,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private ActionBarDrawerToggle setupDrawerToggle(){
+    private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
 
     }
 
-    public void selectDrawerItem(MenuItem item){
+    public void selectDrawerItem(MenuItem item) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         android.support.v4.app.Fragment fragment = null;
         Class fragmentClass = null;
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_fragment_one:
                 fragmentClass = RefrigeratorFragment.class;
                 break;
@@ -135,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = MicrowaveFragment.class;
                 break;
         }
-        try{
+        try {
             fragment = (android.support.v4.app.Fragment) fragmentClass.newInstance();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -157,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mDrawerToggle.onOptionsItemSelected(item)){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -179,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//        method to find height of the status bar
+    //        method to find height of the status bar
     public int getStatusBarHeight() {
         int result = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -195,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
         // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
 
 
 }

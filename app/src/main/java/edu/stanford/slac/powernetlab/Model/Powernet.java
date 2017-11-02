@@ -2,6 +2,7 @@ package edu.stanford.slac.powernetlab.Model;
 
 
 public class Powernet {
+
     String device_name;
     String device_status;
     String device_load;
@@ -21,6 +22,10 @@ public class Powernet {
 
     public int getDevice_id() {
         return device_id;
+    }
+
+    public void setDevice_status(String device_status) {
+        this.device_status = device_status;
     }
 
 }
