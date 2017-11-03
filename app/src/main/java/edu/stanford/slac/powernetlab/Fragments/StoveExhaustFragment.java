@@ -1,5 +1,6 @@
 package edu.stanford.slac.powernetlab.Fragments;
 
+
 import android.app.Fragment;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -30,13 +31,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AcFragment extends android.support.v4.app.Fragment {
+public class StoveExhaustFragment extends android.support.v4.app.Fragment {
     public static final String BASE_URL = "http://pwrnet-158117.appspot.com/api/v1/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ac, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_stove_oven_exhaust, container, false);
         requestData(view);
 
         // Inflate the layout for this fragment
@@ -56,7 +58,7 @@ public class AcFragment extends android.support.v4.app.Fragment {
         final ApiEndpointInterface endpointInterface = retrofit.create(ApiEndpointInterface.class);
 
 
-        Call<model> call = endpointInterface.getData("5/");
+        Call<model> call = endpointInterface.getData("12/");
         call.enqueue(new Callback<model>() {
 
             @Override
@@ -87,7 +89,7 @@ public class AcFragment extends android.support.v4.app.Fragment {
 
                         if (position == 0) {
                             Log.d("Clicked Item", spinner.getSelectedItem().toString());
-                            Call<model> postStatus = endpointInterface.postStatus("5", spinner.getSelectedItem().toString());
+                            Call<model> postStatus = endpointInterface.postStatus("12", spinner.getSelectedItem().toString());
                             Log.d("Success", postStatus.toString());
 
                             postStatus.enqueue(new Callback<model>() {
@@ -113,7 +115,7 @@ public class AcFragment extends android.support.v4.app.Fragment {
 
                         if (position == 1) {
                             Log.d("Clicked Item", spinner.getSelectedItem().toString());
-                            Call<model> postStatus = endpointInterface.postStatus("5", spinner.getSelectedItem().toString());
+                            Call<model> postStatus = endpointInterface.postStatus("12", spinner.getSelectedItem().toString());
                             postStatus.enqueue(new Callback<model>() {
                                 @Override
                                 public void onResponse(Call<model> call, Response<model> response) {
@@ -184,7 +186,4 @@ public class AcFragment extends android.support.v4.app.Fragment {
         });
 
     }
-
-
-
 }

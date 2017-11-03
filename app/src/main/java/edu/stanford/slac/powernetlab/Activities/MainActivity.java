@@ -1,27 +1,17 @@
 package edu.stanford.slac.powernetlab.Activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toolbar;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import edu.stanford.slac.powernetlab.Fragments.AboutFragment;
 import edu.stanford.slac.powernetlab.Fragments.AcFragment;
@@ -29,7 +19,7 @@ import edu.stanford.slac.powernetlab.Fragments.DishWasherFragment;
 import edu.stanford.slac.powernetlab.Fragments.DryerFragment;
 import edu.stanford.slac.powernetlab.Fragments.LightsFragment;
 import edu.stanford.slac.powernetlab.Fragments.MicrowaveFragment;
-import edu.stanford.slac.powernetlab.Fragments.OvenFragment;
+import edu.stanford.slac.powernetlab.Fragments.StoveExhaustFragment;
 import edu.stanford.slac.powernetlab.Fragments.PowerWallFragment;
 import edu.stanford.slac.powernetlab.Fragments.RefrigeratorFragment;
 import edu.stanford.slac.powernetlab.Fragments.SolarPanelsFragment;
@@ -153,10 +143,10 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = DishWasherFragment.class;
                 break;
             case R.id.nav_fragment_seven:
-                fragmentClass = OvenFragment.class;
+                fragmentClass = StoveFragment.class;
                 break;
             case R.id.nav_fragment_eight:
-                fragmentClass = StoveFragment.class;
+                fragmentClass = StoveExhaustFragment.class;
                 break;
             case R.id.nav_fragment_four:
                 fragmentClass = DryerFragment.class;

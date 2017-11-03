@@ -3,7 +3,9 @@ package edu.stanford.slac.powernetlab.Fragments;
 
 import android.app.Fragment;
 import android.graphics.PorterDuff;
-import android.icu.text.DecimalFormat;
+
+import java.text.DecimalFormat;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -12,9 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.Thread;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,18 +42,12 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_refrigerator, container, false);
-//        Log.d("Device Status",device_status.toString());
-//        device_status.setText(status);
-
-
         requestData(view);
-
-
         // Inflate the layout for this fragment
         return view;
     }
+
 
     public void requestData(final View view) {
         Gson gson = new GsonBuilder()
@@ -59,37 +59,101 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        ApiEndpointInterface endpointInterface = retrofit.create(ApiEndpointInterface.class);
+        final ApiEndpointInterface endpointInterface = retrofit.create(ApiEndpointInterface.class);
+
 
         Call<model> call = endpointInterface.getData("10/");
         call.enqueue(new Callback<model>() {
 
             @Override
             public void onResponse(Call<model> call, Response<model> response) {
-                model model = response.body();
-//                Log.d("Entered Fragment", model.toString());
+                final model model = response.body();
+                Log.d("model data", model.toString());
 
-                String status = model.getStatus();
+                final String status = model.getStatus();
                 String type = model.getType().toLowerCase();
                 type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
-                Log.d("Entered Fragment", status);
+                Log.d("Appliance Status", status);
 
-                Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
+                final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
                 spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
+                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
 
                 String value = spinner.getSelectedItem().toString();
-                Log.d("Spinner Vlue", value);
+                int selectionPosition = adapter.getPosition(status);
+                spinner.setSelection(selectionPosition);
+                Log.d("Spinner Value", value);
+
+                spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("Spinner Position", String.valueOf(position));
+
+                        if (position == 0) {
+                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
+                            Call<model> postStatus = endpointInterface.postStatus("10", spinner.getSelectedItem().toString());
+                            Log.d("Success", postStatus.toString());
+
+                            postStatus.enqueue(new Callback<model>() {
+                                @Override
+                                public void onResponse(Call<model> call, Response<model> response) {
+                                    Log.d("Success", "1");
+
+                                    if (response.isSuccessful()) {
+                                        Log.d("Success", "OFF");
+                                        Toast.makeText(getContext(), "Refrigerator is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<model> call, Throwable t) {
+                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+                        }
+
+                        if (position == 1) {
+                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
+                            Call<model> postStatus = endpointInterface.postStatus("10", spinner.getSelectedItem().toString());
+                            postStatus.enqueue(new Callback<model>() {
+                                @Override
+                                public void onResponse(Call<model> call, Response<model> response) {
+                                    if (response.isSuccessful()) {
+                                        Log.d("Success", "OFF");
+                                        Toast.makeText(getContext(), "Refrigerator is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<model> call, Throwable t) {
+                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
 
 
-//                TextView device_status = view.findViewById(R.id.device_status);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        int selectionPosition = adapter.getPosition(status);
+                        spinner.setSelection(selectionPosition);
+
+                    }
+                });
+
+
                 TextView device_name = view.findViewById(R.id.device_name);
-//                System.out.println(device_status);
                 device_name.setText(type);
-//                device_status.setText(status);
-
-
             }
 
             @Override
@@ -115,7 +179,7 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
 
                 System.out.println(pcNum2);
                 Log.d(powerConsumption, "powerConsumptionRate");
-                TextView consumption = (TextView)view.findViewById(R.id.power_consumption);
+                TextView consumption = (TextView) view.findViewById(R.id.power_consumption);
                 consumption.setText(pcNum2);
             }
 
@@ -125,6 +189,9 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
             }
         });
 
-
     }
+
+
+
+
 }
