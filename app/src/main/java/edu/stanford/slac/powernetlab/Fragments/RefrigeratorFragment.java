@@ -68,6 +68,7 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
             @Override
             public void onResponse(Call<model> call, Response<model> response) {
                 final model model = response.body();
+                Log.d("Response Status", String.valueOf(response.isSuccessful()));
                 Log.d("model data", model.toString());
 
                 final String status = model.getStatus();

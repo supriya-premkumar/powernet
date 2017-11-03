@@ -18,6 +18,7 @@ import edu.stanford.slac.powernetlab.Fragments.AboutFragment;
 import edu.stanford.slac.powernetlab.Fragments.AcFragment;
 import edu.stanford.slac.powernetlab.Fragments.DishWasherFragment;
 import edu.stanford.slac.powernetlab.Fragments.DryerFragment;
+import edu.stanford.slac.powernetlab.Fragments.LandingFragment;
 import edu.stanford.slac.powernetlab.Fragments.LightsFragment;
 import edu.stanford.slac.powernetlab.Fragments.MicrowaveFragment;
 import edu.stanford.slac.powernetlab.Fragments.StoveExhaustFragment;
@@ -79,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 ////         set the transparent color of the status bar, 20% darker
 //        tintManager.setTintColor(Color.parseColor("#20000000"));
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.flContent, new RefrigeratorFragment());
-        fragmentTransaction.commit();
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.flContent, new LandingFragment());
+//        fragmentTransaction.commit();
     }
 
     private void connectApitoGetData() {
