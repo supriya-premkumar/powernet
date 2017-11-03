@@ -3,6 +3,7 @@ package edu.stanford.slac.powernetlab.Activities;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -77,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
 //        tintManager.setNavigationBarTintEnabled(true);
 ////         set the transparent color of the status bar, 20% darker
 //        tintManager.setTintColor(Color.parseColor("#20000000"));
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.flContent, new RefrigeratorFragment());
+        fragmentTransaction.commit();
     }
 
     private void connectApitoGetData() {
