@@ -53,6 +53,8 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_refrigerator, container, false);
         requestData(view);
+        performBackgroundTask(view);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -193,7 +195,7 @@ public class RefrigeratorFragment extends android.support.v4.app.Fragment {
                 TextView consumption = (TextView) view.findViewById(R.id.power_consumption);
                 consumption.setText(pcNum2);
 
-                performBackgroundTask(view);
+//                performBackgroundTask(view);
             }
 
             @Override
