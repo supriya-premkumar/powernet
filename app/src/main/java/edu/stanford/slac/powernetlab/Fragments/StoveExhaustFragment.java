@@ -20,6 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import edu.stanford.slac.powernetlab.Model.PowerConsumption;
 import edu.stanford.slac.powernetlab.Model.model;
@@ -33,6 +36,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class StoveExhaustFragment extends android.support.v4.app.Fragment {
     public static final String BASE_URL = "http://pwrnet-158117.appspot.com/api/v1/";
+    ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +45,7 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
 
         View view = inflater.inflate(R.layout.fragment_stove_oven_exhaust, container, false);
         requestData(view);
+        performBackgroundTask(view);
 
         // Inflate the layout for this fragment
         return view;
@@ -158,7 +164,7 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        Call<PowerConsumption> powerConsumptionCall = endpointInterface.getPowerConsumption("5");
+        Call<PowerConsumption> powerConsumptionCall = endpointInterface.getPowerConsumption("12");
         powerConsumptionCall.enqueue(new Callback<PowerConsumption>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -184,6 +190,95 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
 
             }
         });
+
+    }
+
+    public void performBackgroundTask(final View view) {
+
+        scheduler.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+
+                final ApiEndpointInterface endpointInterface = retrofit.create(ApiEndpointInterface.class);
+
+                Call<model> call = endpointInterface.getData("12/");
+                call.enqueue(new Callback<model>() {
+
+                    @Override
+                    public void onResponse(Call<model> call, Response<model> response) {
+                        final model model = response.body();
+                        Log.d("Response Status", String.valueOf(response.isSuccessful()));
+                        Log.d("model data", model.toString());
+
+                        final String status = model.getStatus();
+                        final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
+                        spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
+                        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+
+                        String value = spinner.getSelectedItem().toString();
+                        int selectionPosition = adapter.getPosition(status);
+                        spinner.setSelection(selectionPosition);
+                        Log.d("Spinner Value", value);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<model> call, Throwable t) {
+                        Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+
+
+                Call<PowerConsumption> powerConsumptionCall = endpointInterface.getPowerConsumption("12");
+                powerConsumptionCall.enqueue(new Callback<PowerConsumption>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(Call<PowerConsumption> call, Response<PowerConsumption> response) {
+                        int code = response.code();
+                        Log.d("PC Response code", String.valueOf(code));
+
+                        PowerConsumption pc = response.body();
+                        Log.d(pc.toString(), "PC");
+                        String powerConsumption = pc.getResult();
+                        float pcNum = Float.parseFloat(powerConsumption);
+                        DecimalFormat df = new DecimalFormat("#.####");
+                        String pcNum2 = df.format(pcNum);
+
+                        System.out.println(pcNum2);
+                        Log.d(powerConsumption, "powerConsumptionRate");
+                        TextView consumption = (TextView) view.findViewById(R.id.power_consumption);
+                        consumption.setText(pcNum2);
+                    }
+
+                    @Override
+                    public void onFailure(Call<PowerConsumption> call, Throwable t) {
+                        Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+
+
+                    }
+
+                });
+            }
+        }, 0, 10, TimeUnit.SECONDS);
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        scheduler.shutdown();
 
     }
 }

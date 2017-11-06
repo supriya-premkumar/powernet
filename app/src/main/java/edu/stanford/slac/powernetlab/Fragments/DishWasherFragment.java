@@ -240,9 +240,6 @@ public class DishWasherFragment extends android.support.v4.app.Fragment {
                 });
 
 
-
-
-
                 Call<PowerConsumption> powerConsumptionCall = endpointInterface.getPowerConsumption("14");
                 powerConsumptionCall.enqueue(new Callback<PowerConsumption>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
