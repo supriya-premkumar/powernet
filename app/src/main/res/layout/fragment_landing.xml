@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_3"
+
     android:orientation="vertical">
 
     <TextView
@@ -9,31 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Welcome to Powernet Application"
-        android:textSize="22dp"
-        android:textColor="@color/primary_dark"
+        android:textSize="26dp"
+        android:padding="40dp"
+        android:textColor="@color/background"
         android:gravity="center_horizontal|center_vertical"
         android:includeFontPadding="false"/>
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="140dp"
-        android:gravity="center_horizontal"
-        android:scaleType="centerCrop"
-        android:src="@drawable/power"
-        android:layout_below="@+id/welcome"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_below="@+id/icon"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp"
+        android:padding="50dp"
         android:text="Please Click on navigation menu on the Top Left Corner to see more options"
         android:textSize="22dp"
-        android:textColor="@color/primary_dark"
+        android:textColor="@color/background"
+        android:layout_alignParentBottom="true"
         android:gravity="center_horizontal|center_vertical"
         android:includeFontPadding="false"/>
 </RelativeLayout>

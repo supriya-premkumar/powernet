@@ -38,6 +38,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0' // To serialize and Deserialize json data
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
+
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

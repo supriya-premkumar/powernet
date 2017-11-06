@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 ////         set the transparent color of the status bar, 20% darker
 //        tintManager.setTintColor(Color.parseColor("#20000000"));
 
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.flContent, new LandingFragment());
-//        fragmentTransaction.commit();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.flContent, new LandingFragment());
+        fragmentTransaction.commit();
     }
 
     private void connectApitoGetData() {

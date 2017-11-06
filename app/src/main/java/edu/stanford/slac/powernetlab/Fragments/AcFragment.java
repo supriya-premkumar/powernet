@@ -65,9 +65,9 @@ public class AcFragment extends android.support.v4.app.Fragment {
                 Log.d("model data", model.toString());
 
                 final String status = model.getStatus();
-                String type = model.getType().toLowerCase();
-                type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
-                Log.d("Appliance Status", status);
+//                String type = model.getType().toLowerCase();
+//                type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
+//                Log.d("Appliance Status", status);
 
                 final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
                 spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
@@ -145,9 +145,9 @@ public class AcFragment extends android.support.v4.app.Fragment {
                     }
                 });
 
-
-                TextView device_name = view.findViewById(R.id.device_name);
-                device_name.setText(type);
+//
+//                TextView device_name = view.findViewById(R.id.device_name);
+//                device_name.setText(type);
             }
 
             @Override
