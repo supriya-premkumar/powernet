@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AcFragment extends android.support.v4.app.Fragment {
     public static final String BASE_URL = "http://pwrnet-158117.appspot.com/api/v1/";
     ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    String status = "";
 
 
     @Override
@@ -70,86 +72,146 @@ public class AcFragment extends android.support.v4.app.Fragment {
                 final model model = response.body();
                 Log.d("model data", model.toString());
 
-                final String status = model.getStatus();
+                 status = model.getStatus();
+                ImageView ac = (ImageView)view.findViewById(R.id.ac);
+                ac.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        if(status.equals("ON")){
+                            status="OFF";
+                            Log.d("Click Registered", "Clickity is ON");
+                            v.setBackgroundResource(R.drawable.image_border_off);
+                            Call<model> postStatus = endpointInterface.postStatus("5", status);
+                            postStatus.enqueue(new Callback<edu.stanford.slac.powernetlab.Model.model>() {
+                                @Override
+                                public void onResponse(Call<model> call, Response<model> response) {
+                                    Log.d("OnResponse", model.getStatus());
+                                }
+
+                                @Override
+                                public void onFailure(Call<model> call, Throwable t) {
+                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                                    Log.d("OnFailure", model.getStatus());
+
+                                }
+                            });
+
+                        }
+
+                        else if (status.equals("OFF")){
+                            status="ON";
+                            Log.d("Click Registered", "Clickity is ON");
+                            v.setBackgroundResource(R.drawable.image_border_on);
+                            Call<model> postStatus = endpointInterface.postStatus("5", status);
+                            postStatus.enqueue(new Callback<edu.stanford.slac.powernetlab.Model.model>() {
+                                @Override
+                                public void onResponse(Call<model> call, Response<model> response) {
+                                    Log.d("OnResponse", model.getStatus());
+                                }
+
+                                @Override
+                                public void onFailure(Call<model> call, Throwable t) {
+                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                                    Log.d("OnFailure", model.getStatus());
+
+                                }
+                            });
+
+
+
+                        }
+
+                    }
+                });
+
+                if(status.equals("ON")){
+                    ac.setBackgroundResource(R.drawable.image_border_on);
+                }
+                else if (status.equals("OFF")){
+                    ac.setBackgroundResource(R.drawable.image_border_off);
+                }
+
 //                String type = model.getType().toLowerCase();
 //                type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
 //                Log.d("Appliance Status", status);
 
-                final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
-                spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
-                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-
-                String value = spinner.getSelectedItem().toString();
-                int selectionPosition = adapter.getPosition(status);
-                spinner.setSelection(selectionPosition);
-                Log.d("Spinner Value", value);
-
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Spinner Position", String.valueOf(position));
-
-                        if (position == 0) {
-                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
-                            Call<model> postStatus = endpointInterface.postStatus("5", spinner.getSelectedItem().toString());
-                            Log.d("Success", postStatus.toString());
-
-                            postStatus.enqueue(new Callback<model>() {
-                                @Override
-                                public void onResponse(Call<model> call, Response<model> response) {
-                                    Log.d("Success", "1");
-
-                                    if (response.isSuccessful()) {
-                                        Log.d("Success", "OFF");
-                                        Toast.makeText(getContext(), "Air Conditioner is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<model> call, Throwable t) {
-                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-
-                        }
-
-                        if (position == 1) {
-                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
-                            Call<model> postStatus = endpointInterface.postStatus("5", spinner.getSelectedItem().toString());
-                            postStatus.enqueue(new Callback<model>() {
-                                @Override
-                                public void onResponse(Call<model> call, Response<model> response) {
-                                    if (response.isSuccessful()) {
-                                        Log.d("Success", "OFF");
-                                        Toast.makeText(getContext(), "Air Conditioner is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<model> call, Throwable t) {
-                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        int selectionPosition = adapter.getPosition(status);
-                        spinner.setSelection(selectionPosition);
-
-                    }
-                });
+//                final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
+//                spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
+//                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
+//                spinner.setAdapter(adapter);
+//
+//                String value = spinner.getSelectedItem().toString();
+//                int selectionPosition = adapter.getPosition(status);
+//                spinner.setSelection(selectionPosition);
+//                Log.d("Spinner Value", value);
+//
+//                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        Log.d("Spinner Position", String.valueOf(position));
+//
+//                        if (position == 0) {
+//                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
+//                            Call<model> postStatus = endpointInterface.postStatus("5", spinner.getSelectedItem().toString());
+//                            Log.d("Success", postStatus.toString());
+//
+//                            postStatus.enqueue(new Callback<model>() {
+//                                @Override
+//                                public void onResponse(Call<model> call, Response<model> response) {
+//                                    Log.d("Success", "1");
+//
+//                                    if (response.isSuccessful()) {
+//                                        Log.d("Success", "OFF");
+//                                        Toast.makeText(getContext(), "Air Conditioner is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<model> call, Throwable t) {
+//                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            });
+//
+//                        }
+//
+//                        if (position == 1) {
+//                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
+//                            Call<model> postStatus = endpointInterface.postStatus("5", spinner.getSelectedItem().toString());
+//                            postStatus.enqueue(new Callback<model>() {
+//                                @Override
+//                                public void onResponse(Call<model> call, Response<model> response) {
+//                                    if (response.isSuccessful()) {
+//                                        Log.d("Success", "OFF");
+//                                        Toast.makeText(getContext(), "Air Conditioner is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<model> call, Throwable t) {
+//                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            });
+//
+//
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//                        int selectionPosition = adapter.getPosition(status);
+//                        spinner.setSelection(selectionPosition);
+//
+//                    }
+//                });
 
 //
 //                TextView device_name = view.findViewById(R.id.device_name);
@@ -216,17 +278,28 @@ public class AcFragment extends android.support.v4.app.Fragment {
                         final model model = response.body();
                         Log.d("Response Status", String.valueOf(response.isSuccessful()));
                         Log.d("model data", model.toString());
-
                         final String status = model.getStatus();
-                        final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
-                        spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
-                        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
-                        spinner.setAdapter(adapter);
+                        ImageView ac = (ImageView)view.findViewById(R.id.ac);
 
-                        String value = spinner.getSelectedItem().toString();
-                        int selectionPosition = adapter.getPosition(status);
-                        spinner.setSelection(selectionPosition);
-                        Log.d("Spinner Value", value);
+
+
+                        if(status.equals("ON")){
+                            ac.setBackgroundResource(R.drawable.image_border_on);
+                        }
+                        else if (status.equals("OFF")){
+                            ac.setBackgroundResource(R.drawable.image_border_off);
+                        }
+//
+//                        final String status = model.getStatus();
+//                        final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
+//                        spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
+//                        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
+//                        spinner.setAdapter(adapter);
+//
+//                        String value = spinner.getSelectedItem().toString();
+//                        int selectionPosition = adapter.getPosition(status);
+//                        spinner.setSelection(selectionPosition);
+//                        Log.d("Spinner Value", value);
 
                     }
 

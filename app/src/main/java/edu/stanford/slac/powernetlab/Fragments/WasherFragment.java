@@ -249,7 +249,7 @@ public class WasherFragment extends android.support.v4.app.Fragment {
                 Log.d(pc.toString(), "PC");
                 String powerConsumption = pc.getResult();
                 float pcNum = Float.parseFloat(powerConsumption);
-                DecimalFormat df = new DecimalFormat("#.####");
+                DecimalFormat df = new DecimalFormat("#.#");
                 String pcNum2 = df.format(pcNum);
 
                 System.out.println(pcNum2);
@@ -283,7 +283,7 @@ public class WasherFragment extends android.support.v4.app.Fragment {
 
                 final ApiEndpointInterface endpointInterface = retrofit.create(ApiEndpointInterface.class);
 
-                Call<model> call = endpointInterface.getData("12/");
+                Call<model> call = endpointInterface.getData("13/");
                 call.enqueue(new Callback<model>() {
 
                     @Override
@@ -322,7 +322,7 @@ public class WasherFragment extends android.support.v4.app.Fragment {
                 });
 
 
-                Call<PowerConsumption> powerConsumptionCall = endpointInterface.getPowerConsumption("12");
+                Call<PowerConsumption> powerConsumptionCall = endpointInterface.getPowerConsumption("13");
                 powerConsumptionCall.enqueue(new Callback<PowerConsumption>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
@@ -334,7 +334,7 @@ public class WasherFragment extends android.support.v4.app.Fragment {
                         Log.d(pc.toString(), "PC");
                         String powerConsumption = pc.getResult();
                         float pcNum = Float.parseFloat(powerConsumption);
-                        DecimalFormat df = new DecimalFormat("#.####");
+                        DecimalFormat df = new DecimalFormat("#.#");
                         String pcNum2 = df.format(pcNum);
 
                         System.out.println(pcNum2);
