@@ -3,6 +3,7 @@ package edu.stanford.slac.powernetlab.Fragments;
 
 import android.app.Fragment;
 import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StoveExhaustFragment extends android.support.v4.app.Fragment {
     public static final String BASE_URL = "http://pwrnet-158117.appspot.com/api/v1/";
     ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    String status = "";
 
 
     @Override
@@ -52,6 +55,7 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
     }
 
     public void requestData(final View view) {
+        final ImageView exhaust = (ImageView) view.findViewById(R.id.exhaust);
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
@@ -72,92 +76,150 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
                 final model model = response.body();
                 Log.d("model data", model.toString());
 
-                final String status = model.getStatus();
-//                String type = model.getType().toLowerCase();
-//                type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
-//                Log.d("Appliance Status", status);
-
-                final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
-                spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
-                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-
-                String value = spinner.getSelectedItem().toString();
-                int selectionPosition = adapter.getPosition(status);
-                spinner.setSelection(selectionPosition);
-                Log.d("Spinner Value", value);
-
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+                status = model.getStatus();
+                exhaust.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Spinner Position", String.valueOf(position));
-
-                        if (position == 0) {
-                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
-                            Call<model> postStatus = endpointInterface.postStatus("12", spinner.getSelectedItem().toString());
-                            Log.d("Success", postStatus.toString());
-
-                            postStatus.enqueue(new Callback<model>() {
+                    public void onClick(View v) {
+                        if (status.equals("ON")) {
+                            status = "OFF";
+                            Log.d("Click Registered", "Clickity is ON");
+                            v.setBackgroundResource(R.drawable.image_border_off);
+                            Call<model> postStatus = endpointInterface.postStatus("12", status);
+                            postStatus.enqueue(new Callback<edu.stanford.slac.powernetlab.Model.model>() {
                                 @Override
                                 public void onResponse(Call<model> call, Response<model> response) {
-                                    Log.d("Success", "1");
-
-                                    if (response.isSuccessful()) {
-                                        Log.d("Success", "OFF");
-                                        Toast.makeText(getContext(), "Stove Oven Exhaust is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-
-                                    }
+                                    Log.d("OnResponse", model.getStatus());
                                 }
 
                                 @Override
                                 public void onFailure(Call<model> call, Throwable t) {
                                     Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                                    Log.d("OnFailure", model.getStatus());
 
                                 }
                             });
-
                         }
 
-                        if (position == 1) {
-                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
-                            Call<model> postStatus = endpointInterface.postStatus("12", spinner.getSelectedItem().toString());
-                            postStatus.enqueue(new Callback<model>() {
+                        else if (status.equals("OFF")){
+                            status="ON";
+                            Log.d("Click Registered", "Clickity is ON");
+                            v.setBackgroundResource(R.drawable.image_border_on);
+                            Call<model> postStatus = endpointInterface.postStatus("12", status);
+                            postStatus.enqueue(new Callback<edu.stanford.slac.powernetlab.Model.model>() {
                                 @Override
                                 public void onResponse(Call<model> call, Response<model> response) {
-                                    if (response.isSuccessful()) {
-                                        Log.d("Success", "OFF");
-                                        Toast.makeText(getContext(), "Stove Oven Exhaust is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-
-                                    }
+                                    Log.d("OnResponse", model.getStatus());
                                 }
 
                                 @Override
                                 public void onFailure(Call<model> call, Throwable t) {
                                     Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                                    Log.d("OnFailure", model.getStatus());
 
                                 }
                             });
 
 
+
                         }
 
+                        if(status.equals("ON")){
+                            exhaust.setBackgroundResource(R.drawable.image_border_on);
+                        }
+                        else if (status.equals("OFF")){
+                            exhaust.setBackgroundResource(R.drawable.image_border_off);
+                        }
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        int selectionPosition = adapter.getPosition(status);
-                        spinner.setSelection(selectionPosition);
 
                     }
                 });
 
+//                String type = model.getType().toLowerCase();
+//                type = Character.toUpperCase(type.charAt(0)) + type.substring(1);
+//                Log.d("Appliance Status", status);
+
+//                final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
+//                spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
+//                final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
+//                spinner.setAdapter(adapter);
 //
-//                TextView device_name = view.findViewById(R.id.device_name);
-//                device_name.setText(type);
+//                String value = spinner.getSelectedItem().toString();
+//                int selectionPosition = adapter.getPosition(status);
+//                spinner.setSelection(selectionPosition);
+//                Log.d("Spinner Value", value);
+//
+//                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        Log.d("Spinner Position", String.valueOf(position));
+//
+//                        if (position == 0) {
+//                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
+//                            Call<model> postStatus = endpointInterface.postStatus("12", spinner.getSelectedItem().toString());
+//                            Log.d("Success", postStatus.toString());
+//
+//                            postStatus.enqueue(new Callback<model>() {
+//                                @Override
+//                                public void onResponse(Call<model> call, Response<model> response) {
+//                                    Log.d("Success", "1");
+//
+//                                    if (response.isSuccessful()) {
+//                                        Log.d("Success", "OFF");
+//                                        Toast.makeText(getContext(), "Stove Oven Exhaust is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<model> call, Throwable t) {
+//                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            });
+//
+//                        }
+//
+//                        if (position == 1) {
+//                            Log.d("Clicked Item", spinner.getSelectedItem().toString());
+//                            Call<model> postStatus = endpointInterface.postStatus("12", spinner.getSelectedItem().toString());
+//                            postStatus.enqueue(new Callback<model>() {
+//                                @Override
+//                                public void onResponse(Call<model> call, Response<model> response) {
+//                                    if (response.isSuccessful()) {
+//                                        Log.d("Success", "OFF");
+//                                        Toast.makeText(getContext(), "Stove Oven Exhaust is turned " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<model> call, Throwable t) {
+//                                    Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            });
+//
+//
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//                        int selectionPosition = adapter.getPosition(status);
+//                        spinner.setSelection(selectionPosition);
+//
+//                    }
+//                });
+//
+////
+////                TextView device_name = view.findViewById(R.id.device_name);
+////                device_name.setText(type);
             }
 
+            //
             @Override
             public void onFailure(Call<model> call, Throwable t) {
 
@@ -176,7 +238,7 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
                 Log.d(pc.toString(), "PC");
                 String powerConsumption = pc.getResult();
                 float pcNum = Float.parseFloat(powerConsumption);
-                DecimalFormat df = new DecimalFormat("#.####");
+                DecimalFormat df = new DecimalFormat("#.#");
                 String pcNum2 = df.format(pcNum);
 
                 System.out.println(pcNum2);
@@ -217,17 +279,28 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
                         final model model = response.body();
                         Log.d("Response Status", String.valueOf(response.isSuccessful()));
                         Log.d("model data", model.toString());
-
                         final String status = model.getStatus();
-                        final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
-                        spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
-                        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
-                        spinner.setAdapter(adapter);
+                        final ImageView exhaust = (ImageView) view.findViewById(R.id.exhaust);
 
-                        String value = spinner.getSelectedItem().toString();
-                        int selectionPosition = adapter.getPosition(status);
-                        spinner.setSelection(selectionPosition);
-                        Log.d("Spinner Value", value);
+
+
+                        if(status.equals("ON")){
+                            exhaust.setBackgroundResource(R.drawable.image_border_on);
+                        }
+                        else if (status.equals("OFF")){
+                            exhaust.setBackgroundResource(R.drawable.image_border_off);
+                        }
+
+//                        final String status = model.getStatus();
+//                        final Spinner spinner = (Spinner) view.findViewById(R.id.device_status);
+//                        spinner.getBackground().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
+//                        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.appliance_status, android.R.layout.simple_spinner_dropdown_item);
+//                        spinner.setAdapter(adapter);
+//
+//                        String value = spinner.getSelectedItem().toString();
+//                        int selectionPosition = adapter.getPosition(status);
+//                        spinner.setSelection(selectionPosition);
+//                        Log.d("Spinner Value", value);
 
                     }
 
@@ -252,7 +325,7 @@ public class StoveExhaustFragment extends android.support.v4.app.Fragment {
                         Log.d(pc.toString(), "PC");
                         String powerConsumption = pc.getResult();
                         float pcNum = Float.parseFloat(powerConsumption);
-                        DecimalFormat df = new DecimalFormat("#.####");
+                        DecimalFormat df = new DecimalFormat("#.#");
                         String pcNum2 = df.format(pcNum);
 
                         System.out.println(pcNum2);
