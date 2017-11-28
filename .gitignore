@@ -1,7 +1,7 @@
 .idea/vcs.xml
 .DS_Store
 .gradle/
-.idea/libraries/
+.idea/
 .idea/workspace.xml
 PowernetLab.iml
 app/.DS_Store
@@ -14,4 +14,4 @@ local.properties
 .idea/compiler.xml
 .idea/copyright/
 .idea/misc.xml
-
+.idea/gradle.xml

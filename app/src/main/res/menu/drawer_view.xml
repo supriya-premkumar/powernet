@@ -7,23 +7,28 @@
                 <group  android:checkableBehavior="single">
                     <item
                         android:id="@+id/nav_fragment_one"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/refrigerator_menu_2"
                         android:title="@string/refrigerator"
                         />
                     <item
                         android:id="@+id/nav_fragment_three"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/dish_washer_menu"
                         android:title="@string/dish_washer"
                         />
                     <item
                         android:id="@+id/nav_fragment_seven"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/cook_top_menu"
                         android:title="@string/oven"
                         />
                     <item
                         android:id="@+id/nav_fragment_eight"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/exhaust_menu"
                         android:title="@string/stove"
+                        />
+                    <item
+                        android:id="@+id/nav_microwave"
+                        android:icon="@drawable/microwave_menu"
+                        android:title="@string/microwave"
                         />
                 </group>
             </menu>
@@ -35,12 +40,12 @@
                 <group  android:checkableBehavior="single">
                     <item
                         android:id="@+id/nav_fragment_four"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/dryer_machine_menu"
                         android:title="@string/dryer"
                         />
                     <item
                         android:id="@+id/nav_fragment_five"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/dryer_machine_menu"
                         android:title="@string/washer"
                         />
 
@@ -56,27 +61,27 @@
                 <group  android:checkableBehavior="single">
                     <item
                         android:id="@+id/nav_fragment_two"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/storage_menu"
                         android:title="@string/power_wall"
                         />
                     <item
                         android:id="@+id/nav_fragment_six"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/air_conditioner_menu"
                         android:title="@string/ac"
                         />
                     <item
                         android:id="@+id/nav_fragment_nine"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/water_heater"
                         android:title="@string/water_heater"
                         />
                     <item
                         android:id="@+id/nav_fragment_ten"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/solar_panel_menu"
                         android:title="@string/solar_panels"
                         />
                     <item
                         android:id="@+id/nav_fragment_eleven"
-                        android:icon="@android:drawable/ic_input_get"
+                        android:icon="@drawable/light_menu"
                         android:title="@string/lights"
                         />
 

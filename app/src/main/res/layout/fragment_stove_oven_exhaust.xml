@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+
+        android:id="@+id/ls_refrigerator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/exhaust"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:src="@drawable/exhaust" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="50dp"
+                android:text="Stove Oven Exhaust"
+                android:textColor="@color/primary_dark"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+
+            <TextView
+                android:id="@+id/power_consumption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:entries="@array/appliance_status"
+                android:text="0.0"
+                android:textColor="@color/primary_dark"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/watt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:entries="@array/appliance_status"
+                android:text="w"
+                android:textColor="@color/primary_dark"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
