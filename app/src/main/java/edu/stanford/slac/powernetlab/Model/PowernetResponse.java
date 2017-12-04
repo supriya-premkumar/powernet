@@ -14,9 +14,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by supriyap on 11/2/17.
- */
 
 public class PowernetResponse {
     public static final String BASE_URL = "http://pwrnet-158117.appspot.com/api/v1/";

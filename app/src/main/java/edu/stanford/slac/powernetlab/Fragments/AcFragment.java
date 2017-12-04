@@ -220,6 +220,9 @@ public class AcFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onFailure(Call<model> call, Throwable t) {
+                Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                Log.d("OnFailure", call.toString());
+
 
             }
         });
@@ -247,6 +250,8 @@ public class AcFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onFailure(Call<PowerConsumption> call, Throwable t) {
+                Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                Log.d("OnFailure", call.toString());
 
             }
         });
@@ -306,6 +311,7 @@ public class AcFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onFailure(Call<model> call, Throwable t) {
                         Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                        Log.d("OnFailure", call.toString());
 
 
                     }
@@ -336,6 +342,7 @@ public class AcFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onFailure(Call<PowerConsumption> call, Throwable t) {
                         Toast.makeText(getContext(), "Check your Internet connection", Toast.LENGTH_SHORT).show();
+                        Log.d("OnFailure", call.toString());
 
 
                     }

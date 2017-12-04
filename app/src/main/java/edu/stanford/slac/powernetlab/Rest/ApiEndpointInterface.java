@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -27,6 +28,14 @@ public interface ApiEndpointInterface {
     @FormUrlEncoded
     @PATCH("device/{id}/")
     Call<model> postStatus(@Path("id") String id, @Field("status") String status);
+
+
+    /*
+    Request along with the auth token
+    @GET("device/{id}")
+    Call<model> getData(@Path("id") String id, @Header(<Auth>) String auth);
+     */
+
 
 
 }

@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         connectApitoGetData();
 
+
 //        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rv_refrigerator);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
