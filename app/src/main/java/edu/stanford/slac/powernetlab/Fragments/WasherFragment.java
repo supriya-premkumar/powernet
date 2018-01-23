@@ -174,7 +174,7 @@ public class WasherFragment extends android.support.v4.app.Fragment {
                 Log.d(pc.toString(), "PC");
                 String powerConsumption = pc.getResult();
                 float pcNum = Float.parseFloat(powerConsumption);
-                DecimalFormat df = new DecimalFormat("#.####");
+                DecimalFormat df = new DecimalFormat("#.##");
                 String pcNum2 = df.format(pcNum);
 
                 System.out.println(pcNum2);
@@ -251,7 +251,7 @@ public class WasherFragment extends android.support.v4.app.Fragment {
                         Log.d(pc.toString(), "PC");
                         String powerConsumption = pc.getResult();
                         float pcNum = Float.parseFloat(powerConsumption);
-                        DecimalFormat df = new DecimalFormat("#.####");
+                        DecimalFormat df = new DecimalFormat("#.##");
                         String pcNum2 = df.format(pcNum);
 
                         System.out.println(pcNum2);

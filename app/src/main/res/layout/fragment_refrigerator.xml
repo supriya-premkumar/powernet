@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp">
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="16dp"-->
+        <!--app:cardCornerRadius="10dp"-->
+        <!--app:cardElevation="8dp">-->
 
         <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
@@ -128,6 +128,6 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    <!--</android.support.v7.widget.CardView>-->
 
 </ScrollView>
